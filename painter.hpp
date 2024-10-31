@@ -1,8 +1,9 @@
 #pragma once
-
 #include "point.hpp"
 
 class Painter {
 public:
-    void DrawText(Point position, const char* text);
+    Painter();
+    void DrawBoard(const char board[3][3]);
+    void DisplayMessage(const char* message);
 };

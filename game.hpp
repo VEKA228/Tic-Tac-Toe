@@ -1,14 +1,16 @@
 #pragma once
-
 #include "board.hpp"
+#include "point.hpp"
 
 class Game {
-    Board _board;
-    char _currentPlayer;
 public:
     Game();
-    void Play(); 
+    void Play();
+
 private:
-    void SwitchPlayer();           
-    Point GetPlayerMove() const; 
+    void SwitchPlayer();
+    Point GetPlayerMove() const;
+
+    Board _board;
+    char _currentPlayer;
 };

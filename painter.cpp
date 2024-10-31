@@ -1,7 +1,11 @@
 #include "painter.hpp"
-#include <iostream>
 
-void Painter::DrawText(Point position, const char* text) {
-    // Deocamdată, afișăm doar textul la poziția dată
-    std::cout << "Textul: " << text << " la poziția (" << position.x << ", " << position.y << ")\n";
+Painter::Painter() {}
+
+void Painter::DrawBoard(const char board[3][3]) {
+    // Pregătește structura tablei, dar nu o afișează efectiv
+}
+
+void Painter::DisplayMessage(const char* message) {
+    // Pregătește mesajul, dar nu îl afișează efectiv
 }

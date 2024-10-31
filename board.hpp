@@ -1,13 +1,17 @@
 #pragma once
-
 #include "point.hpp"
 
 class Board {
-    char _grid[3][3]; 
 public:
-    Board();
-    void Display() const;          
-    bool MakeMove(Point p, char player);  
-    bool IsFull() const;          
+    Board(int width = 3, int height = 3);
+    bool MakeMove(const Point& move, char player);
     bool CheckWin(char player) const;
+    bool IsFull() const;
+    void Clear();
+    void GetBoardState(char board[3][3]) const;
+
+private:
+    char _board[3][3];
+    int _width;
+    int _height;
 };
