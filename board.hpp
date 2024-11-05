@@ -1,11 +1,13 @@
 #pragma once
 #include "point.hpp"
 #include <iostream>
+#include <vector>
+#include <memory>
 
 class Board {
     int _width;
     int _height;
-    char _board[3][3]; // Tabloul de joc
+    std::vector<std::vector<char>> _board; // STL cont
 
 public:
     // Constructor implicit și cu parametri

@@ -11,7 +11,7 @@
                 "C:/MinGW/lib/gcc/mingw32/6.3.0/include/c++/backward"
             ],
             "defines": [],
-            "compilerPath": "C:\\MinGW\\bin\\gcc.exe",
+            "compilerPath": "C:\\MinGW\\bin\\g++.exe",
             "cStandard": "c11",
             "cppStandard": "c++17",
             "intelliSenseMode": "gcc-x64"

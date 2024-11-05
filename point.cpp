@@ -32,3 +32,4 @@ std::ostream& operator<<(std::ostream& out, const Point& point) {
     return out;
 }
 
+

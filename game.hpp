@@ -1,6 +1,7 @@
 #pragma once
 #include "board.hpp"
 #include "point.hpp"
+#include <memory>
 
 class Game {
 public:
@@ -11,6 +12,6 @@ private:
     void SwitchPlayer();
     Point GetPlayerMove() const;
 
-    Board _board;
+    std::unique_ptr<Board> _board;  // smart pointer
     char _currentPlayer;
 };
