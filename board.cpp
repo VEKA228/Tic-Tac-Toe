@@ -1,62 +1,102 @@
 #include "board.hpp"
+#include <iostream>
 
-// Constructor implementation
+// Constructor cu parametri
 Board::Board(int width, int height) : _width(width), _height(height) {
-    Clear(); // Initialize the board to empty state
+    Clear(); 
 }
 
-// Clear the board
+// Constructor de copiere
+Board::Board(const Board& other) : _width(other._width), _height(other._height) {
+    for (int i = 0; i < 3; ++i)
+        for (int j = 0; j < 3; ++j)
+            _board[i][j] = other._board[i][j];
+}
+
+// Operator de copiere
+Board& Board::operator=(const Board& other) {
+    if (this != &other) {
+        _width = other._width;
+        _height = other._height;
+        for (int i = 0; i < 3; ++i)
+            for (int j = 0; j < 3; ++j)
+                _board[i][j] = other._board[i][j];
+    }
+    return *this;
+}
+
+// Operator de comparație
+bool Board::operator==(const Board& other) const {
+    if (_width != other._width || _height != other._height) return false;
+    for (int i = 0; i < 3; ++i)
+        for (int j = 0; j < 3; ++j)
+            if (_board[i][j] != other._board[i][j]) return false;
+    return true;
+}
+
+// Curăță tabla de joc
 void Board::Clear() {
-    for (int i = 0; i < _height; ++i) {
-        for (int j = 0; j < _width; ++j) {
-            _board[i][j] = ' '; // Fill the board with empty spaces
-        }
-    }
+    for (int i = 0; i < 3; ++i)
+        for (int j = 0; j < 3; ++j)
+            _board[i][j] = ' ';
 }
 
-// MakeMove implementation
+// Adaugă o mutare pentru jucătorul specificat
 bool Board::MakeMove(const Point& move, char player) {
-    if (move.x >= 0 && move.x < _width && move.y >= 0 && move.y < _height && _board[move.y][move.x] == ' ') {
-        _board[move.y][move.x] = player; // Place the player's move on the board
-        return true; // Move was successful
+    if (move.x >= 0 && move.x < 3 && move.y >= 0 && move.y < 3 && _board[move.x][move.y] == ' ') {
+        _board[move.x][move.y] = player;
+        return true;
     }
-    return false; // Move failed (invalid or occupied)
+    return false; 
 }
 
-// CheckWin implementation
+// Verifică dacă jucătorul specificat a câștigat
 bool Board::CheckWin(char player) const {
-    // Check rows
-    for (int i = 0; i < _height; ++i) {
-        if ((_board[i][0] == player && _board[i][1] == player && _board[i][2] == player)) {
-            return true; // Player wins by row
+    for (int i = 0; i < 3; ++i) {
+        if ((_board[i][0] == player && _board[i][1] == player && _board[i][2] == player) ||
+            (_board[0][i] == player && _board[1][i] == player && _board[2][i] == player)) {
+            return true;
         }
     }
-    // Check columns
-    for (int j = 0; j < _width; ++j) {
-        if ((_board[0][j] == player && _board[1][j] == player && _board[2][j] == player)) {
-            return true; // Player wins by column
-        }
+    if ((_board[0][0] == player && _board[1][1] == player && _board[2][2] == player) ||
+        (_board[0][2] == player && _board[1][1] == player && _board[2][0] == player)) {
+        return true;
     }
-    // Check diagonals
-    return ((_board[0][0] == player && _board[1][1] == player && _board[2][2] == player) || 
-            (_board[0][2] == player && _board[1][1] == player && _board[2][0] == player));
+    return false;
 }
 
-// IsFull implementation
+// Verifică dacă tabla este plină
 bool Board::IsFull() const {
-    for (int i = 0; i < _height; ++i) {
-        for (int j = 0; j < _width; ++j) {
-            if (_board[i][j] == ' ') return false; // Empty space found
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            if (_board[i][j] == ' ') {
+                return false;
+            }
         }
     }
-    return true; // No empty spaces found
+    return true;
 }
 
-// GetBoardState implementation (optional, if you want to retrieve the board state)
-void Board::GetBoardState(char board[3][3]) const {
-    for (int i = 0; i < _height; ++i) {
-        for (int j = 0; j < _width; ++j) {
-            board[i][j] = _board[i][j]; // Copy the current state of the board
+// Metoda Display pentru afișarea tablei de joc
+void Board::Display() const {
+    std::cout << *this;
+}
+
+// Operator de citire
+std::istream& operator>>(std::istream& in, Board& board) {
+    for (int i = 0; i < 3; ++i)
+        for (int j = 0; j < 3; ++j)
+            in >> board._board[i][j];
+    return in;
+}
+
+// Operator de afișare
+std::ostream& operator<<(std::ostream& out, const Board& board) {
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            out << (board._board[i][j] == ' ' ? '.' : board._board[i][j]) << " ";
         }
+        out << std::endl;
     }
+    return out;
 }

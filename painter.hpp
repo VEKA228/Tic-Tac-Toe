@@ -1,9 +1,10 @@
 #pragma once
+#include "abstract_painter.hpp"
 #include "point.hpp"
 
-class Painter {
+class Painter : public AbstractPainter {
 public:
-    Painter();
-    void DrawBoard(const char board[3][3]);
-    void DisplayMessage(const char* message);
+    virtual void DrawImage(Point topLeft, Point bottomRight, char** image) override;
+    virtual void WriteText(Point position, const char* text) override;
 };
+
