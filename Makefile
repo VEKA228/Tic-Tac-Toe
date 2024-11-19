@@ -1,31 +1,81 @@
-# Target to build the final executable
-all: TicTacToe
 
-# Rule to link all object files and create the executable
-TicTacToe: board.o game.o main.o painter.o point.o
-	g++ -o TicTacToe board.o game.o main.o painter.o point.o
+# Directoare
+SRC_DIR = src
+INCLUDE_DIR = include
+BUILD_DIR = build
 
-# Compile board.cpp into board.o
-board.o: board.cpp board.hpp point.hpp
-	g++ -c board.cpp -o board.o
+# Compiler settings
+CXX = g++
+CXXFLAGS = -std=c++17 -I$(INCLUDE_DIR) -Wall -Wextra
 
-# Compile game.cpp into game.o
-game.o: game.cpp game.hpp board.hpp point.hpp
-	g++ -c game.cpp -o game.o
+# Fisiere Point
+POINT_SRC = $(SRC_DIR)/point/point.cpp
+POINT_OBJ = $(BUILD_DIR)/point.o
+POINT_LIB = $(BUILD_DIR)/libpoint.a
 
-# Compile main.cpp into main.o
-main.o: main.cpp game.hpp board.hpp point.hpp painter.hpp
-	g++ -c main.cpp -o main.o
+# Fisiere Board
+BOARD_SRC = $(SRC_DIR)/board/board.cpp
+BOARD_OBJ = $(BUILD_DIR)/board.o
+BOARD_LIB = $(BUILD_DIR)/libboard.a
 
-# Compile painter.cpp into painter.o
-painter.o: painter.cpp painter.hpp point.hpp
-	g++ -c painter.cpp -o painter.o
+# Fisiere Painter
+PAINTER_SRC = $(SRC_DIR)/painter/painter.cpp
+PAINTER_OBJ = $(BUILD_DIR)/painter.o
+PAINTER_LIB = $(BUILD_DIR)/libpainter.a
 
-# Compile point.cpp into point.o
-point.o: point.cpp point.hpp
-	g++ -c point.cpp -o point.o
+# Fisiere Game și Main
+GAME_SRC = $(SRC_DIR)/game.cpp
+GAME_OBJ = $(BUILD_DIR)/game.o
 
-# Clean up object files and executable
+MAIN_SRC = $(SRC_DIR)/main.cpp
+MAIN_OBJ = $(BUILD_DIR)/main.o
+
+# Executabil final
+EXECUTABLE = TicTacToe
+
+# Reguli implicite
+all: $(EXECUTABLE)
+
+# Crearea executabilului
+$(EXECUTABLE): $(MAIN_OBJ) $(GAME_OBJ) $(POINT_LIB) $(BOARD_LIB) $(PAINTER_LIB)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+# Crearea bibliotecii statice pentru Point
+$(POINT_LIB): $(POINT_OBJ)
+	ar rcs $@ $^
+
+# Compilare Point
+$(POINT_OBJ): $(POINT_SRC) | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Crearea bibliotecii statice pentru Board
+$(BOARD_LIB): $(BOARD_OBJ)
+	ar rcs $@ $^
+
+# Compilare Board
+$(BOARD_OBJ): $(BOARD_SRC) | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Crearea bibliotecii statice pentru Painter
+$(PAINTER_LIB): $(PAINTER_OBJ)
+	ar rcs $@ $^
+
+# Compilare Painter
+$(PAINTER_OBJ): $(PAINTER_SRC) | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Compilare Game
+$(GAME_OBJ): $(GAME_SRC) | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Compilare Main
+$(MAIN_OBJ): $(MAIN_SRC) | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Crearea directorului build
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+# Clean
 clean:
-	del *.o TicTacToe.exe
-
+	rm -rf $(BUILD_DIR) $(EXECUTABLE)

@@ -30,7 +30,7 @@ void Game::Play() {
                 }
                 SwitchPlayer();
             } else {
-                std::cout << "Miscare invalidă. Incearcă din nou.\n";
+                std::cout << "Miscare invalida. Incearca din nou.\n";
             }
         }
 
@@ -39,7 +39,7 @@ void Game::Play() {
         }
 
         char playAgain;
-        std::cout << "Vrei să joci din nou? (y/n): ";
+        std::cout << "Vrei sa joci din nou? (y/n): ";
         std::cin >> playAgain;
         if (playAgain != 'y' && playAgain != 'Y') {
             break; 

@@ -12,6 +12,7 @@ private:
     void SwitchPlayer();
     Point GetPlayerMove() const;
 
+    char _currentPlayer; 
     std::unique_ptr<Board> _board;  // smart pointer
-    char _currentPlayer;
 };
+
