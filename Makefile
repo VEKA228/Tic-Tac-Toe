@@ -1,8 +1,13 @@
 
 # Directoare
+TEST_DIR = tests
+TEST_POINT = $(TEST_DIR)/test_point
+TEST_BOARD = $(TEST_DIR)/test_board
+TEST_PAINTER = $(TEST_DIR)/test_painter
 SRC_DIR = src
 INCLUDE_DIR = include
 BUILD_DIR = build
+
 
 # Compiler settings
 CXX = g++
@@ -74,8 +79,34 @@ $(MAIN_OBJ): $(MAIN_SRC) | $(BUILD_DIR)
 
 # Crearea directorului build
 $(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
+	if not exist $(BUILD_DIR) mkdir $(BUILD_DIR)
+
 
 # Clean
 clean:
-	rm -rf $(BUILD_DIR) $(EXECUTABLE)
+	@if exist $(BUILD_DIR) rmdir /s /q $(BUILD_DIR)
+	@if exist $(EXECUTABLE).exe del /q $(EXECUTABLE).exe
+	@if exist tests\test_point.exe del /q tests\test_point.exe
+	@if exist tests\test_board.exe del /q tests\test_board.exe
+	@if exist tests\test_painter.exe del /q tests\test_painter.exe
+
+# Test executables
+tests: $(TEST_POINT) $(TEST_BOARD) $(TEST_PAINTER)
+
+# Test for Point
+$(TEST_POINT): $(TEST_DIR)/test_point.cpp $(POINT_LIB)
+	$(CXX) $(CXXFLAGS) -o $@ $< $(POINT_LIB)
+
+# Test for Board
+$(TEST_BOARD): $(TEST_DIR)/test_board.cpp $(BOARD_LIB) $(POINT_LIB)
+	$(CXX) $(CXXFLAGS) -o $@ $< $(BOARD_LIB) $(POINT_LIB)
+
+# Test for Painter
+$(TEST_PAINTER): $(TEST_DIR)/test_painter.cpp $(PAINTER_LIB) $(POINT_LIB)
+	$(CXX) $(CXXFLAGS) -o $@ $< $(PAINTER_LIB) $(POINT_LIB)
+
+# Run all tests
+run-tests: tests
+	./$(TEST_POINT)
+	./$(TEST_BOARD)
+	./$(TEST_PAINTER)

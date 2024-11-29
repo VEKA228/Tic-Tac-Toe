@@ -9,11 +9,10 @@ Tic-Tac-Toe este un joc clasic pe tablă de două persoane. Este un joc turn-bas
 3. Jucătorii plasează pe rând simbolurile pe tablă, într-un spațiu liber;
 4. Jocul este terminat când un jucător câștigă, când acesta aliniază trei simboluri în lilnie. Dacă tabloul se umple complet fără câștigător, jocul se termină în egalitate.
 
-#### Tipuri de date declarate
-1. enum class Player  - reprezintă jucătorii în joc. Poate fi fie Player::X sau Player::O;
-2. class Baord - reprezintă tabla de joc care conține un tablou de caractere 3x3 care indică starea fiecărei celule: X, O sau gol;
-3. class Game - reprezintă logica jocului Tic-Tac-Toe. Gestionează mutările jucătorilor, verifică câte linii de câte simboluri sunt completate și determină câștigătorul sau dacă jocul a fost terminat la egalitate.
-
+## Dependențe
+- Compilator: GCC 6.3.0
+- Biblioteci: <iostream>, <memory>, <vector>
+- Sistem: MinGW/Windows
 
 # Cerințe pentru construirea jocului
 
@@ -25,7 +24,7 @@ Tic-Tac-Toe este un joc clasic pe tablă de două persoane. Este un joc turn-bas
 Pentru a construi proiectul, urmați acești pași:
 
 1. Deschideți terminalul 
-2. Navigați în directorul proiectului: cd C:\Users\vikas\univer\C++\Tic-Tac-Toe
+2. Navigați în directorul proiectului: cd C:\...\Tic-Tac-Toe
 3. Rulați comanda pentru a compila proiectul:  mingw32-make
 4. Rulați aplicația: TicTacToe.exe
 5. Pentru a curăța fișierele obiect și executabilele: mingw32-make clean
